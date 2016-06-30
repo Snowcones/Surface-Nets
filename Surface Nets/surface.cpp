@@ -39,13 +39,15 @@ float Surface::arcLengthDPhi(float theta, float phi, float dPhi)
 
 float Surface::arcLengthDTheta(float theta, float v, float dTheta)
 {
-    if (parameterization == R_OF_Z_THETA)
+    if (parameterization == R_OF_Z_AND_THETA)
     {
-        return dTheta * sqrtf(powf(r(theta, v), 2.0) + powf(dRdTheta(theta, v), 2.0));
+        float z = v;
+        return dTheta * sqrtf(powf(r(theta, z), 2.0) + powf(dRdTheta(theta, z), 2.0));
     }
-    else if (parameterization == R_OF_PHI_THETA)
+    else if (parameterization == R_OF_PHI_AND_THETA)
     {
-        return dTheta * sqrtf(powf(r(theta, v) * cosf(v), 2.0) + powf(dRdTheta(theta, v), 2.0));
+        float phi = v;
+        return dTheta * sqrtf(powf(r(theta, phi) * cosf(phi), 2.0) + powf(dRdTheta(theta, phi), 2.0));
     }
     else
     {
@@ -61,11 +63,11 @@ void Surface::createPlotList(float **segmentWidths, float **arcLengths, float **
     }
     else
     {
-        if (parameterization == R_OF_Z_THETA)
+        if (parameterization == R_OF_Z_AND_THETA)
         {
             createPlotList(segmentWidths, arcLengths, horizontalSpacing, verticalSpacing, -1.0, 1.0, vSteps, tSteps);
         }
-        else if (parameterization == R_OF_PHI_THETA)
+        else if (parameterization == R_OF_PHI_AND_THETA)
         {
             createPlotList(segmentWidths, arcLengths, horizontalSpacing, verticalSpacing, -M_PI / 2, M_PI / 2, vSteps, tSteps);
         }
@@ -113,11 +115,11 @@ void Surface::createPlotList(float **segmentWidths, float **arcLengths, float **
             (*segmentWidths)[(vSteps+1)*2*t + 2*s]     = arcLengthDTheta(theta, v, dTheta/2);
             (*segmentWidths)[(vSteps+1)*2*t + 2*s + 1] = arcLengthDTheta(nextTheta, v, dTheta/2);
             
-            if (parameterization == R_OF_PHI_THETA)
+            if (parameterization == R_OF_PHI_AND_THETA)
             {
                 currLength += arcLengthDPhi(theta, v, vStep);
             }
-            else if (parameterization == R_OF_Z_THETA)
+            else if (parameterization == R_OF_Z_AND_THETA)
             {
                 currLength += arcLengthDZ(theta, v, vStep);
             }

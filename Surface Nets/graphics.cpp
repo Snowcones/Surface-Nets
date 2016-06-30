@@ -56,7 +56,7 @@ void graphics::drawSurface(Surface c)
             float leftPos  = xToCenter - xOfLeftPoint;
             float rightPos = xToCenter + xOfRightPoint;
             
-            leftEdge.push_back(sf::Vertex(scaleFactor * sf::Vector2f(leftPos, yOfPoints), sf::Color::Red)); //Ugly syntax but it looks like it's the "SFML way" to do it
+            leftEdge.push_back(sf::Vertex(scaleFactor * sf::Vector2f(leftPos, yOfPoints), sf::Color::Red));
             rightEdge.push_back(sf::Vertex(scaleFactor * sf::Vector2f(rightPos, yOfPoints), sf::Color::Blue));
         }
         xToCenter += horizontalSpacings[2*t + 1];
@@ -66,6 +66,10 @@ void graphics::drawSurface(Surface c)
         rightEdgeVec.push_back(rightEdge);
     }
     
+    free(segmentWidths);
+    free(arcLengths);
+    free(horizontalSpacings);
+    free(verticalSpacings);
     
     sf::RenderWindow window(sf::VideoMode(screenWidth, screenHeight), "Curve Net!");
     window.setVerticalSyncEnabled(true);

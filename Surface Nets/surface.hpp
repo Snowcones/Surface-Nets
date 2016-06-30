@@ -7,8 +7,8 @@
 #define surface_hpp
 
 typedef enum : int {
-    R_OF_PHI_THETA,
-    R_OF_Z_THETA,
+    R_OF_PHI_AND_THETA,
+    R_OF_Z_AND_THETA,
 } parameterizationType;
 
 #include <stdio.h>
@@ -22,7 +22,7 @@ private:
     float arcLengthDZ(float theta, float z, float dz);
     float arcLengthDPhi(float theta, float phi, float dPhi);
     float arcLengthDTheta(float theta, float phi, float dphi);
-    void getSpacing(float** spacing, float* segmentWidths, float* arcLengths, int vSteps, int tSteps);
+    void  getSpacing(float** spacing, float* segmentWidths, float* arcLengths, int vSteps, int tSteps);
     float r(float t, float v);
     
 public:
@@ -34,7 +34,7 @@ public:
     float minV;
     float maxV;
     
-    parameterizationType parameterization = R_OF_Z_THETA;
+    parameterizationType parameterization = R_OF_Z_AND_THETA;
     float (*func)(float, float) = NULL;
     
     void createPlotList(float** segmentWidths, float** arcLengths, float **horizontalSpacing, float **verticalSpacing, int vSteps, int tSteps);

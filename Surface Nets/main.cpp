@@ -21,7 +21,7 @@ float sphereRPhi(float t, float phi)
     return 1;
 }
 
-float otherSphereRPhi(float t, float phi)
+float offsetSphereRPhi(float t, float phi)
 {
     return 2*cosf(t)*cosf(phi);
 }
@@ -35,8 +35,8 @@ int main(int argc, const char * argv[]) {
     
     static graphics g;
     Surface s;
-    s.func = sphereRZ;
-    s.parameterization = R_OF_Z_THETA;
+    s.func = offsetSphereRPhi;
+    s.parameterization = R_OF_PHI_AND_THETA;
     g.drawSurface(s);
     
     return 0;
